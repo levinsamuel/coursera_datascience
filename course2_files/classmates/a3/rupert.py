@@ -1,54 +1,10 @@
 
 # coding: utf-8
-
-# # Assignment 3 - Building a Custom Visualization
-#
-# ---
-#
-# In this assignment you must choose one of the options presented below and submit a visual as well as your source code for peer grading. The details of how you solve the assignment are up to you, although your assignment must use matplotlib so that your peers can evaluate your work. The options differ in challenge level, but there are no grades associated with the challenge level you chose. However, your peers will be asked to ensure you at least met a minimum quality for a given technique in order to pass. Implement the technique fully (or exceed it!) and you should be able to earn full grades for the assignment.
-#
-#
-# &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ferreira, N., Fisher, D., & Konig, A. C. (2014, April). [Sample-oriented task-driven visualizations: allowing users to make better, more confident decisions.](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/Ferreira_Fisher_Sample_Oriented_Tasks.pdf)
-# &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In Proceedings of the SIGCHI Conference on Human Factors in Computing Systems (pp. 571-580). ACM. ([video](https://www.youtube.com/watch?v=BI7GAs-va-Q))
-#
-#
-# In this [paper](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/Ferreira_Fisher_Sample_Oriented_Tasks.pdf) the authors describe the challenges users face when trying to make judgements about probabilistic data generated through samples. As an example, they look at a bar chart of four years of data (replicated below in Figure 1). Each year has a y-axis value, which is derived from a sample of a larger dataset. For instance, the first value might be the number votes in a given district or riding for 1992, with the average being around 33,000. On top of this is plotted the 95% confidence interval for the mean (see the boxplot lectures for more information, and the yerr parameter of barcharts).
-#
-# <br>
-# <img src="readonly/Assignment3Fig1.png" alt="Figure 1" style="width: 400px;"/>
-# <h4 style="text-align: center;" markdown="1">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Figure 1 from (Ferreira et al, 2014).</h4>
-#
-# <br>
-#
-# A challenge that users face is that, for a given y-axis value (e.g. 42,000), it is difficult to know which x-axis values are most likely to be representative, because the confidence levels overlap and their distributions are different (the lengths of the confidence interval bars are unequal). One of the solutions the authors propose for this problem (Figure 2c) is to allow users to indicate the y-axis value of interest (e.g. 42,000) and then draw a horizontal line and color bars based on this value. So bars might be colored red if they are definitely above this value (given the confidence interval), blue if they are definitely below this value, or white if they contain this value.
-#
-#
-# <br>
-# <img src="readonly/Assignment3Fig2c.png" alt="Figure 1" style="width: 400px;"/>
-# <h4 style="text-align: center;" markdown="1">  Figure 2c from (Ferreira et al. 2014). Note that the colorbar legend at the bottom as well as the arrows are not required in the assignment descriptions below.</h4>
-#
-# <br>
-# <br>
-#
-# **Easiest option:** Implement the bar coloring as described above - a color scale with only three colors, (e.g. blue, white, and red). Assume the user provides the y axis value of interest as a parameter or variable.
-#
-#
-# **Harder option:** Implement the bar coloring as described in the paper, where the color of the bar is actually based on the amount of data covered (e.g. a gradient ranging from dark blue for the distribution being certainly below this y-axis, to white if the value is certainly contained, to dark red if the value is certainly not contained as the distribution is above the axis).
-#
-# **Even Harder option:** Add interactivity to the above, which allows the user to click on the y axis to set the value of interest. The bar colors should change with respect to what value the user has selected.
-#
-# **Hardest option:** Allow the user to interactively set a range of y values they are interested in, and recolor based on this (e.g. a y-axis band, see the paper for more details).
-#
-# ---
-#
-# *Note: The data given for this assignment is not the same as the data used in the article and as a result the visualizations may look a little different.*
-
-# In[98]:
-
 # Use the following data for this assignment:
 
 import pandas as pd
 import numpy as np
+from scipy import stats
 
 np.random.seed(12345)
 
@@ -73,11 +29,6 @@ yerr = df_std / np.sqrt(column_count) * stats.t.ppf(1-0.05/2, column_count-1) # 
 y_voi = 42000 # value of interest for y-axis; hard coded
 
 
-# In[101]:
-
-#### visual part
-get_ipython().magic('matplotlib notebook')
-
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 mpl.get_backend()
@@ -86,14 +37,13 @@ mpl.get_backend()
 import matplotlib.colors as mcol
 import matplotlib.cm as cm
 
-plt.figure()
-plt.show()
+fig, (ax1, ax2) = plt.subplots(2,1)
 
 # reset y_voi just in case
 y_voi = 42000
 
 ## 1) simple bar chart for transformed data
-bars = plt.bar( range(len(df.index)),
+bars = ax1.bar( range(len(df.index)),
                df_mean,
                yerr = yerr,
                #hatch='-', hatch provides pattern on columns, not the error lines
@@ -102,17 +52,17 @@ bars = plt.bar( range(len(df.index)),
 # Todo: found way to have T shaped error lines but seems not to exists in default packages
 
 # years on x-axis
-plt.xticks( range(len(df.index)), df_mean.index)
-
-## 2) grey line
-plt.axhline(y = y_voi,
-            alpha = 0.5, linewidth = 1.5, # ? default was 1, 2 too big
-            color = 'grey')
+# ax1.set_xticks( range(len(df.index)), df_mean.index)
+#
+# ## 2) grey line
+# ax1.axhline(y = y_voi,
+#             alpha = 0.5, linewidth = 1.5, # ? default was 1, 2 too big
+#             color = 'grey')
 
 ## 3 color and subplot, simple version
 cpick = cm.ScalarMappable( cmap = mcol.LinearSegmentedColormap.from_list("color-map",["b", "w", "r"]) )
 cpick.set_array([])
-plt.colorbar(cpick, orientation='horizontal', alpha=0.8)  # alpha makes it ugly ...
+plt.colorbar(cpick, ax=ax2, orientation='horizontal', alpha=0.8)  # alpha makes it ugly ...
 
 
 
@@ -128,7 +78,7 @@ for tmp_bar, tmp_yerr in zip(bars, yerr):
     percentages.append( trimmer(perc) )
 
 #bars.set_color( cpick.to_rgba(percentages) )  # ? better way to adjust ?
-bars = plt.bar( range(len(df.index)),
+bars = ax1.bar( range(len(df.index)),
                df_mean, yerr = yerr,
                color = cpick.to_rgba(percentages),
                align='center', alpha=0.5
@@ -136,59 +86,59 @@ bars = plt.bar( range(len(df.index)),
 
 ## until now everything initial plotting
 
-# def onclick(event):
-#     plt.cla()
-#     plt.figure()
-#     plt.show()
-#     global ix, iy
-#     ix, iy = event.xdata, event.ydata
+def onclick(event):
+    ax1.cla()
+    # plt.figure()
+    # plt.show()
+    global ix, iy
+    ix, iy = event.xdata, event.ydata
+    print(event)
+    y_voi = int(iy) # just in case
 
-#     y_voi = long(iy) # just in case
+    ## something wrong, have to draw everything anew and not just the motifications
 
-#     ## something wrong, have to draw everything anew and not just the motifications
+    ## 1) simple bar chart for transformed data
+    bars = ax1.bar( range(len(df.index)),
+               df_mean,
+               yerr = yerr,
+               #hatch='-', hatch provides pattern on columns, not the error lines
+               align='center', alpha=0.5
+               )
+    # ax1.xticks( range(len(df.index)), df_mean.index)
+    # #
+    # # ## 2) grey line
+    # ax1.axhline(y = y_voi,
+    #         alpha = 0.5, linewidth = 1.5, # ? default was 1, 2 too big
+    #         color = 'grey')
 
-#     ## 1) simple bar chart for transformed data
-#     bars = plt.bar( range(len(df.index)),
-#                df_mean,
-#                yerr = yerr,
-#                #hatch='-', hatch provides pattern on columns, not the error lines
-#                align='center', alpha=0.5
-#                )
-#     plt.xticks( range(len(df.index)), df_mean.index)
+    ## 3 color and subplot, simple version
+    cpick = cm.ScalarMappable( cmap = mcol.LinearSegmentedColormap.from_list("color-map",["b", "w", "r"]) )
+    cpick.set_array([])
+    plt.colorbar(cpick, ax=ax2, orientation='horizontal', alpha=0.8)  # alpha makes it ugly ...
 
-#     ## 2) grey line
-#     plt.axhline(y = y_voi,
-#             alpha = 0.5, linewidth = 1.5, # ? default was 1, 2 too big
-#             color = 'grey')
+    percentages = []
 
-#     ## 3 color and subplot, simple version
-#     cpick = cm.ScalarMappable( cmap = mcol.LinearSegmentedColormap.from_list("color-map",["b", "w", "r"]) )
-#     cpick.set_array([])
-#     plt.colorbar(cpick, orientation='horizontal', alpha=0.8)  # alpha makes it ugly ...
+    for tmp_bar, tmp_yerr in zip(bars, yerr):
+        low  = tmp_bar.get_height() - tmp_yerr
+        high = tmp_bar.get_height() + tmp_yerr
+        perc = (high - y_voi) / (high - low)
+        percentages.append( trimmer(perc) )
 
-#     percentages = []
-
-#     for tmp_bar, tmp_yerr in zip(bars, yerr):
-#         low  = tmp_bar.get_height() - tmp_yerr
-#         high = tmp_bar.get_height() + tmp_yerr
-#         perc = (high - y_voi) / (high - low)
-#         percentages.append( trimmer(perc) )
-
-#     bars = plt.bar( range(len(df.index)),
-#                df_mean, yerr = yerr,
-#                color = cpick.to_rgba(percentages),
-#                align='center', alpha=0.5
-#                )
+    # bars = plt.bar( range(len(df.index)),
+    #            df_mean, yerr = yerr,
+    #            color = cpick.to_rgba(percentages),
+    #            align='center', alpha=0.5
+    #            )
 
 
 
-# plt.gcf().canvas.mpl_connect('button_press_event', onclick)
-
+fig.canvas.mpl_connect('button_press_event', onclick)
+plt.show()
 # safe image
-from matplotlib.backends.backend_agg import FigureCanvasAgg
-from matplotlib.figure import Figure
-canvas = FigureCanvasAgg(fig)
-canvas.print_png('assignment3_rh.png')
+# from matplotlib.backends.backend_agg import FigureCanvasAgg
+# from matplotlib.figure import Figure
+# canvas = FigureCanvasAgg(fig)
+# canvas.print_png('assignment3_rh.png')
 
 
 # In[90]:
@@ -196,19 +146,19 @@ canvas.print_png('assignment3_rh.png')
 # scrap code to figure out event stuff
 #f = lambda x: 1 if x > 1 else 0 if x < 0 else x
 
-y_value = 10
-
-plt.figure()
-plt.show()
-
-plt.axhline(y = y_voi, alpha = 0.5, linewidth = 1.5, color = 'blue')
-
-def onclick(event):
-    plt.cla() # miss 1
-    global ix, iy
-    ix, iy = event.xdata, event.ydata
-    print('x = %d, y = %d'%(ix, iy))
-    y_value = iy
-    plt.axhline(y = y_value, alpha = 0.5, linewidth = 1.5, color = 'blue')
-
-plt.gcf().canvas.mpl_connect('button_press_event', onclick)     # miss 2
+# y_value = 10
+#
+# plt.figure()
+# plt.show()
+#
+# plt.axhline(y = y_voi, alpha = 0.5, linewidth = 1.5, color = 'blue')
+#
+# def onclick(event):
+#     plt.cla() # miss 1
+#     global ix, iy
+#     ix, iy = event.xdata, event.ydata
+#     print('x = %d, y = %d'%(ix, iy))
+#     y_value = iy
+#     plt.axhline(y = y_value, alpha = 0.5, linewidth = 1.5, color = 'blue')
+#
+# plt.gcf().canvas.mpl_connect('button_press_event', onclick)     # miss 2
