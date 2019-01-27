@@ -1,4 +1,3 @@
-%matplotlib notebook
 import numpy as np
 import pandas as pd
 import matplotlib as mpl
@@ -6,13 +5,16 @@ import matplotlib.pyplot as plt
 import scipy.stats
 import matplotlib.gridspec as gridspec
 
+
+# mpl.use('TkAgg')
+
 # create base data
 np.random.seed(12345)
 
-df = pd.DataFrame([np.random.normal(32000,200000,3650), 
-                   np.random.normal(43000,100000,3650), 
-                   np.random.normal(43500,140000,3650), 
-                   np.random.normal(48000,70000,3650)], 
+df = pd.DataFrame([np.random.normal(32000,200000,3650),
+                   np.random.normal(43000,100000,3650),
+                   np.random.normal(43500,140000,3650),
+                   np.random.normal(48000,70000,3650)],
                   index=[1992,1993,1994,1995])
 
 # transpose, so years become columns
@@ -48,7 +50,7 @@ for s in seriesPerYear.values():
     ciDict['mean'].append(mn)
     ciDict['ciMinIntv'].append(mn-cimin)
     ciDict['ciMaxIntv'].append(cimax-mn)
-    
+
 # create a dataframe form the dict
 #       ciMaxIntv    ciMinIntv          mean
 # 1992  6510.938018  6510.938018  33312.107476
@@ -59,6 +61,7 @@ cidf = pd.DataFrame(ciDict, index=years)
 ciArray = [cidf['ciMinIntv'], cidf['ciMaxIntv']]
 
 # create subplots
+fig = plt.figure()
 gspec = gridspec.GridSpec(7, 1) # 1 col, 5 rows / put colorbar in row 5
 ax = plt.subplot(gspec[:5, 0])
 cbax = plt.subplot(gspec[6:, 0])
@@ -76,9 +79,10 @@ cb.ax.xaxis.set_tick_params(labelsize='small')
 
 
 def updatePlot():
-    global voi
+    global voi, ax
     ax.cla()
-    
+
+    print(voi)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.set_xticks(np.arange(4))
@@ -101,17 +105,23 @@ def updatePlot():
         else: #interpollate
             rgba = cmap(1.0-r)
             plotColors.append(rgba)
-            
-    #ax.set_title("{}".format(r))
 
-    ax.bar(index, cidf['mean'], width=0.6, yerr=ciArray, label='', 
+    #ax.set_title("{}".format(r))
+    print('plot colors:', plotColors)
+    ax.bar(index, cidf['mean'], width=0.6, yerr=ciArray, label='',
         color= plotColors,
-        edgecolor= colorDk, 
+        edgecolor= colorDk,
         lw=0.5,
         capsize=5,
         ecolor=colorDk
-      )
+    )
     ax.axhline(voi, color=colorDk)
+
+
+def clear(event):
+    print('clearing')
+    global voi, ax
+    ax.cla()
 
 
 def onclick(event):
@@ -119,10 +129,13 @@ def onclick(event):
     voi = event.ydata
     updatePlot()
 
-cid = plt.gcf().canvas.mpl_connect('button_press_event', onclick)
+
+cid = fig.canvas.mpl_connect('button_press_event', clear)
+cid = fig.canvas.mpl_connect('button_release_event', onclick)
 
 
 # set initial value of interest
 voi = 40000
 updatePlot()
 
+plt.show()
