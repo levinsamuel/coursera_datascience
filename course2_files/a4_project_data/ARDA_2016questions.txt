@@ -4029,7 +4029,7 @@ Total	4271	1.28	0.932
 2) Not important	1462	34.2
 
 
-327) V161242
+*327) V161242
 IF R SAYS THAT RELIGION IS IMPORTANT: Would you say your religion provides [some guidance in your day-to-day living, quite a bit of guidance, or a great deal of guidance / a great deal of guidance in your day-to-day living, quite a bit of guidance, or some guidance]?
 RANGE: -9 to 3
 	N	Mean	Std. Deviation
@@ -4042,7 +4042,7 @@ Total	4271	1.134	1.779
 3) A great deal	1442	33.8
 
 
-328) V161243
+*328) V161243
 Which of these statements comes closest to describing your feelings about the Bible? 
 RANGE: -9 to 5
 	N	Mean	Std. Deviation
@@ -4055,7 +4055,7 @@ Total	4271	1.804	1.503
 5) Other SPECIFY	9	0.2
 
 
-329) V161244
+*329) V161244
 Lots of things come up that keep people from attending religious services even if they want to. Thinking about your life these days, do you ever attend religious services, apart from occasional weddings, baptisms or funerals?
 RANGE: -9 to 2
 	N	Mean	Std. Deviation
@@ -4066,7 +4066,7 @@ Total	4271	1.354	0.839
 2) No	1700	39.8
 
 
-330) V161245
+*330) V161245
 IF R ATTENDS RELIGIOUS SERVICES: Do you go to religious services [every week, almost every week, once or twice a month, a few times a year, or never / never, a few times a year, once or twice a month, almost every week, or every week]?
 RANGE: -9 to 5
 	N	Mean	Std. Deviation
@@ -4103,7 +4103,7 @@ Total	4271	-0.004	1.381
 2) No	877	20.5
 
 
-333) V161247A
+*333) V161247A
 IF R ATTENDS RELIGIOUS SERVICES: Do you mostly attend a place of worship that is Protestant, Roman Catholic, Jewish, or something else?
 RANGE: -9 to 4
 	N	Mean	Std. Deviation
@@ -4116,7 +4116,7 @@ Total	4271	0.945	1.981
 4) Other	886	20.7
 
 
-334) V161247B
+*334) V161247B
 IF R DOES NOT ATTEND CHURCH BUT THINKS OF SELF AS PART OF CHURCH OR DENOMINATION: Do you consider yourself Protestant, Roman Catholic, Jewish, or something else?
 RANGE: -9 to 4
 	N	Mean	Std. Deviation
@@ -4130,7 +4130,7 @@ Total	4271	-0.303	1.518
 4) Other	299	7.0
 
 
-335) V161248
+*335) V161248
 IF R ATTENDS CHURCH AND ATTENDS AS PROTESTANT OR 'OTHER' / IF DOES NOT ATTEND CHURCH BUT THINKS OF SELF AS PART OF CHURCH OR DENOMINATION AND CONSIDERS SELF PROTESTANT OR 'OTHER': What religion, church or denomination is that?
 RANGE: -9 to 95
 	N	Mean	Std. Deviation
@@ -4394,7 +4394,7 @@ Total	4271	-0.075	1.004
 1) Selected	155	3.6
 
 
-356) V161266C
+*356) V161266C
 Which of the following terms describe your religious beliefs? - Born again
 RANGE: -9 to 1
 	N	Mean	Std. Deviation
@@ -4405,7 +4405,7 @@ Total	4271	0.069	1.073
 1) Selected	768	18.0
 
 
-357) V161266D
+*357) V161266D
 Which of the following terms describe your religious beliefs? - Evangelical
 RANGE: -9 to 1
 	N	Mean	Std. Deviation
@@ -4493,7 +4493,7 @@ Total	4271	-0.071	1.006
 1) Selected	169	4.0
 
 
-365) V161266N
+*365) V161266N
 Which of the following terms describe your religious beliefs? - Spiritual but not religious
 RANGE: -9 to 1
 	N	Mean	Std. Deviation
