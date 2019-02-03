@@ -10285,7 +10285,7 @@ Total	4271	0.771	3.109
 7) Extremely bad	22	0.5
 
 
-826) V162126
+*826) V162126
 In October, the media released a 2005 recording of Donald Trump having a crude conversation about women. Have you heard about this video, or not?
 RANGE: -9 to 2
 	N	Mean	Std. Deviation
@@ -10297,7 +10297,7 @@ Total	4271	0.011	2.562
 2) No, have not heard about it	237	5.5
 
 
-827) V162127
+*827) V162127
 IF R HAS HEARD ABOUT 2005 VIDEO OF REPUBLICAN PRES CAND TRUMP TALK ABOUT WOMEN: In deciding how to vote, how much do you think the information from the video should have mattered to people?
 RANGE: -9 to 5
 	N	Mean	Std. Deviation
@@ -10901,7 +10901,7 @@ Total	4271	0.367	3.015
 3) Not a threat	389	9.1
 
 
-867) V162160
+*867) V162160
 How worried are you that the United States will experience a terrorist attack in the near future?
 RANGE: -9 to 5
 	N	Mean	Std. Deviation
@@ -11038,7 +11038,7 @@ Total	4271	0.424	2.789
 2) No one lost a job	2061	48.3
 
 
-876) V162168
+*876) V162168
 'Our country needs free thinkers who will have the courage to defy traditional ways, even if this upsets many people.'
 RANGE: -9 to 5
 	N	Mean	Std. Deviation
@@ -11070,7 +11070,7 @@ Total	4271	1.489	3.434
 5) Disagree strongly	561	13.1
 
 
-878) V162170
+*878) V162170
 'What our country really needs is a strong, determined leader who will crush evil and take us back to our true path.'
 RANGE: -9 to 5
 	N	Mean	Std. Deviation
@@ -12642,7 +12642,7 @@ Total	4271	1.34	3.435
 4) Definitely did not know	815	19.1
 
 
-983) V162255
+*983) V162255
 Is Barack Obama a Muslim, or is he not a Muslim?
 RANGE: -9 to 2
 	N	Mean	Std. Deviation
@@ -12655,7 +12655,7 @@ Total	4271	0.086	3.358
 2) Not a Muslim	2415	56.5
 
 
-984) V162255A
+*984) V162255A
 IF R SAYS THAT BARACK OBAMA IS A MUSLIM OR SAYS THAT BARACK OBAMA IS NOT A MUSLIM: How sure are you about that?
 RANGE: -9 to 5
 	N	Mean	Std. Deviation
@@ -14133,7 +14133,7 @@ Total	4271	3.584	4.404
 7) Extremely well	752	17.6
 
 
-1079) V162342
+*1079) V162342
 Please mark how well the following pair of words describes you, even if one word describes you better than the other. 'Conventional, uncreative' describes me...
 RANGE: -9 to 7
 	N	Mean	Std. Deviation
