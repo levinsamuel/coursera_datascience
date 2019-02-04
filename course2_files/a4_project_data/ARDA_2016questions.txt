@@ -4091,7 +4091,7 @@ Total	4271	-0.548	0.986
 2) More often than once a week	362	8.5
 
 
-332) V161246
+*332) V161246
 IF R DOES NOT ATTEND RELIGIOUS SERVICES: Regardless of whether you now attend any religious services do you ever think of yourself as part of a particular religion?
 RANGE: -9 to 2
 	N	Mean	Std. Deviation
